@@ -1,0 +1,30 @@
+body {
+    margin: 0;
+    background-color: antiquewhite;
+    font-family: 'Goudy Bookletter 1911', serif;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+.bookshelf-header {
+    margin: 0;
+    background-color: burlywood;
+    padding: 10px;
+}
+
+navbar ul {
+    margin: 0;
+    background-color: aliceblue;
+}
+
+navbar li {
+    display: inline;
+    padding: 0px 8px; 
+}
+
+navbar li.active {
+    border-bottom: solid brown 1px;
+}
