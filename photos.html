@@ -6,8 +6,12 @@
     <title>Personal Webpage</title>
 
     <link rel="stylesheet" href="style.css" media="screen">
+    
+    <link rel="stylesheet" href="pictures_style.css" media="screen">
 
     <script src="script.js" charset="utf-8" defer></script>
+    
+    <script src="pictures_script.js" charset="utf-8" defer></script>
 
     <script src="https://use.fontawesome.com/releases/v5.0.9/js/all.js" defer></script>
 
@@ -29,10 +33,65 @@
         </ul>
     </navbar>
 
-    <main>
-
+    <main class="picture-container">
+        <article class="picture-frame">
+            <img src="space.jpg" class="picture">
+        </article>
+        <article class="picture-frame">
+            <img src="library.jpg" class="picture">
+        </article>
+        <article class="picture-frame">
+            <img src="landscape.jpg" class="picture">
+        </article>
+        <article class="picture-frame">
+            <img src="space.jpg" class="picture">
+        </article>
+        <article class="picture-frame">
+            <img src="library.jpg" class="picture">
+        </article>
+        <article class="picture-frame">
+            <img src="landscape.jpg" class="picture">
+        </article>
+        <article class="picture-frame">
+            <img src="space.jpg" class="picture">
+        </article>
+        <article class="picture-frame">
+            <img src="library.jpg" class="picture">
+        </article>
+        <article class="picture-frame">
+            <img src="landscape.jpg" class="picture">
+        </article>
+        <article class="picture-frame">
+            <img src="landscape.jpg" class="picture">
+        </article>
+        <article class="picture-frame">
+            <img src="landscape.jpg" class="picture">
+        </article>
+    
     </main>
+    
+    <button type="button" id="add-picture-button"><i class="far fa-image"></i></button>
 
+    <div id="modal-backdrop" class="hidden"></div>
+    <div id="add-picture-modal" class="hidden">
+      <div class="modal-dialog">
+
+        <div class="modal-header">
+          <h3>Add a Picture</h3>
+          <button type="button" id="modal-close-button">&times;</button>
+        </div>
+        
+        <div class="modal-header">
+            Add user interface to add a picture here.
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" id="modal-cancel-button">Cancel</button>
+          <button type="button" id="modal-accept-button">Add Picture</button>
+        </div>
+
+      </div>
+    </div>
 </body>
 
 </html>
