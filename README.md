@@ -1,6 +1,12 @@
-*Final Project*
+# Final Project #
+
 Description here!
 
 By:
-Jeremy Lilly
+*Jeremy Lilly
+
 Chase Stubblefield
+
+Hunter Lannon
+
+Khoa Tran*
