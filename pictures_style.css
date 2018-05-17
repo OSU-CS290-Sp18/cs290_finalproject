@@ -1,4 +1,4 @@
-.picture-container {
+#picture-container {
     margin: 50px 10%;
     display: flex;
     flex-flow: row wrap;
@@ -8,6 +8,8 @@
     flex: 1 0 25%;
     margin: 1px;
     border: solid #eeeeee 1px;
+    min-height: 150px;
+    min-width: 250px;
 }
 
 .picture {
@@ -66,8 +68,8 @@
     width: auto;
     max-width: 600px;
     min-width: 350px;
-    min-height: 300px;
-    margin: 40px auto;
+    margin: 30% auto;
+    top: 100px;
     background-color: #fff;
     border-radius: 1px;
 }
@@ -96,18 +98,35 @@
 
 .modal-body {
     padding: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+#picture-file-input {
     
 }
+
+.custom-file-upload {
+    padding: 6px 12px;
+    cursor: pointer;
+    font-size: 25px;
+    background-color: lightblue;
+}
+
+.custom-file-upload:hover {
+    background-color: #319df6;
+}
+
 .modal-footer {
     display: flex;
     justify-content: flex-end;
-    padding: 10px;
+    padding: 20px 10px;
 }
 
 .modal-footer button {
     font-size: 15px;
     background-color: #fff;
-    color: #333;
+    color: #333333;
     border: 1px solid #e0e0e0;
     border-radius: 2px;
     padding: 10px;
@@ -120,10 +139,10 @@
 }
 
 .modal-footer #modal-accept-button {
-    background-color: #319df6;
-    color: #ffffff;
+    background-color: lightblue;
+    color: #333333;
 }
 
 .modal-footer #modal-accept-button:hover {
-    background-color: #087dde;
+    background-color: #319df6;
 }
