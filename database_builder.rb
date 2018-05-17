@@ -56,6 +56,8 @@ def myJSONarray(json)
 		newjson = {
 			"authors" => info["authors"],
 			"title" => info["title"],
+			"isbn_10" => info["industryidentifiers"][0]["identifier"],
+			"isbn_13" => info["industryidentifiers"][1]["identifier"],
 			"description" => info["description"],
 			"smallThumbnail" => info["imageLinks"]["smallThumbnail"],
 			"largeThumbnail" => info["imageLinks"]["thumbnail"],
