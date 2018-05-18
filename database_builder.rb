@@ -45,26 +45,35 @@ def getTitles(books)
 			titles.push(line[0,line.index("by")])
 		end
 	end
+	titles.each do |t|
+		while t.sub!(/[,.=?]/, "")	
+		end
+	end
 	return titles
 end
 
 def myJSONarray(json)
 	myjsonarray = []
 	json["items"].each do |bookObj|
-		info = bookObj["volumeInfo"]
-		next if !info["imageLinks"] 
-		newjson = {
-			"authors" => info["authors"],
-			"title" => info["title"],
-			"isbn_10" => info["industryidentifiers"][0]["identifier"],
-			"isbn_13" => info["industryidentifiers"][1]["identifier"],
-			"description" => info["description"],
-			"smallThumbnail" => info["imageLinks"]["smallThumbnail"],
-			"largeThumbnail" => info["imageLinks"]["thumbnail"],
-			"pageCount" => info["pageCount"],
-			"publishDate" => info["publishedDate"]
-		}	
-		myjsonarray.push(newjson)
+		begin 
+			info = bookObj["volumeInfo"]
+			newjson = {
+				"authors" => info["authors"],
+				"title" => info["title"],
+				"isbn_10" => info["industryIdentifiers"][0]["identifier"],
+				"isbn_13" => info["industryIdentifiers"][1]["identifier"],
+				"description" => info["description"],
+				"smallThumbnail" => info["imageLinks"]["smallThumbnail"],
+				"largeThumbnail" => info["imageLinks"]["thumbnail"],
+				"pageCount" => info["pageCount"],
+				"publishDate" => info["publishedDate"]
+			}	
+		rescue
+			newjson = {}
+			next
+		else
+			myjsonarray.push(newjson)
+		end
 	end
 	return myjsonarray
 end
@@ -111,12 +120,21 @@ def main()
 	titles.each do |title|
 		puts title
 		#remove odd all unicode stuff (had some issues with punctuation)
-		books = getBookJSONarray(title.encode(Encoding.find('ASCII'), encoding_hash))
+		books = getBookJSONarray(title.encode(Encoding.find('ASCII'), {
+			:invalid => :replace,
+			:undef	 => :replace,
+			:replace => ''
+		}))
+
 		if !books then
 			puts "invalid title; #{title}"
 		else
 			#write first book from google api to mongoDB
-			collection.insert_one(books[0])	
+			begin
+				collection.insert_one(books[0])	
+			rescue
+				next
+			end
 		end
 	end
 end
