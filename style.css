@@ -65,8 +65,12 @@ navbar li:hover {
     background-color: #bfbfbf;
 }
 
+.hidden {
+    display: none;
+}
+
 .shelf {
-    margin-top: 10px; 
+    margin-top: 10px;
     z-index: 1;
     display: flex;
     flex-wrap: wrap;
@@ -81,10 +85,12 @@ navbar li:hover {
 }
 
 .book div {
-    margin: 20px; 
+    margin: 20px;
 }
 
 .book-pic {
     width: 150px;
     height: 200px;
 }
+
+/*************************/
