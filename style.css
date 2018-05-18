@@ -1,10 +1,10 @@
 body {
     margin: 0;
     font-family: 'Goudy Bookletter 1911', serif;
-    background-color: cornflowerblue;
+    background-color: whitesmoke;
 }
 
-body::after {
+/*body::after {
     content: "";
     background-color: whitesmoke;
     opacity: 0.9;
@@ -14,18 +14,21 @@ body::after {
     position: absolute;
     z-index: -1;
     display: block;
+}*/
+
+header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url(landscape.jpg);
+    height: 100vh;
 }
 
-.home-page {
-    background-image: url('landscape.jpg');
-}
-
-.bookshelf-page {
-    background-image: url('library.jpg');
-}
-
-.resume-page {
-    background-image: url('space.jpg');
+.header-content {
+    background-color: rgba(255, 255, 255, 0.9);
+    width: 100%;
+    text-align: center;
+    padding: 50px 0px;
 }
 
 a {
@@ -33,27 +36,26 @@ a {
     color: black;
 }
 
-.header {
-    text-align: center;
-    color: white;
-    top: 10px;
-    bottom: 10px;
-    left: 25px;
-    right: 25px;
+.page-image {
+    color: black;
     font-size: 60px;
+    background-color: lightblue;
+    border-radius: 100%;
+    padding: 25px;
 }
 
 navbar ul {
-    margin: 0;
-    padding: 0;
+    top: 22vh;
+    left: 0;
     text-align: center;
+    position: absolute;
 }
 
 navbar li {
-    display: inline;
-    padding: 3px 40px;
-    margin: 10px 0px;
-    justify-content: space-around;
+    display: block;
+    padding: 5px 8px;
+    margin: 5px 0px;
+    border: solid black 2px;
 }
 
 navbar li.active {
