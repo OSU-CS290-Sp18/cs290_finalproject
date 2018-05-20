@@ -4,18 +4,6 @@ body {
     background-color: whitesmoke;
 }
 
-/*body::after {
-    content: "";
-    background-color: whitesmoke;
-    opacity: 0.9;
-    top: 150px;
-    height: 100%;
-    width: 100%;
-    position: absolute;
-    z-index: -1;
-    display: block;
-}*/
-
 header {
     display: flex;
     justify-content: center;
@@ -44,11 +32,13 @@ a {
     padding: 25px;
 }
 
-navbar ul {
-    top: 22vh;
-    left: 0;
-    text-align: center;
+navbar {
     position: absolute;
+    left: 0;
+}
+
+navbar ul {
+    text-align: center;
 }
 
 navbar li {
