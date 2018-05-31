@@ -2,73 +2,165 @@
  * Author: Hunter Lannon
  * Email: lannonh@oregonstate.edu
  */
-var http = require('http');
-var fs = require('fs');
-var path = require('path');
-var url = require('url');
+const http = require('http');
+const fs = require('fs');
+const path = require('path');
+const url = require('url');
+const MongoClient = require('mongodb').MongoClient;
+const assert = require('assert');
+var express = require('express');
+var app = express(); 
+var router = express.Router({
+	"caseSensitive" : true
+});
 
-var stat = 200;
+app.use('/', express.static('./bookshelf'));
+
+//CHANGE THIS TO classmongo
+var host = "localhost";
+//CHANGE THIS TO cs290_lannonh
+var dbname = "bookshelf";
+//dint change this
+
 var path_base = "./bookshelf";
 var default_file = "/index.html";
-var file_ext = "";
+var file_ext = "html";
 
 //404.html is always in cache
 var cache = {};
-fs.readFile("./public/404.html", function(err, data){
+fs.readFile("./bookshelf/404.html", function(err, data){
 	cache["404.html"] = data;
-})
+});
 
 //determine which port to listen to
-port = 1337;
+port = process.env.PORT || 3000;
 console.log("using port: ", port);
 
-function requestHandler(req, res){
-	//assume status of 200 until something goes wrong
-	stat = 200;
+var mongourl = "mongodb://" + host + ":27017";
 
-	console.log("Request Made");
+function getObjects(req, res, queryObjects, collectionName, callback){
+	var objects;
+	//array of objects
+	let allResults = new Array;
+	MongoClient.connect(mongourl, function(err, client){
+		var db = client.db(dbname);
+		var collection = db.collection(collectionName);
+		queryObjects.forEach( function (queryObject, idx) {
+			collection.find(queryObject).limit(10).toArray(function(err, results){
+				if(err){
+					console.log("Error finding documents");
+					callback(false);
+				}else{
+					console.log("THE QUERY ITSELF", queryObject);
+					console.log("RESULTS OF QUERY: ", results);
+					results.forEach(function (element){
+						allResults.push(element);
+					});
+					callback(allResults);
+				}		
+				if (idx === queryObjects.length - 1){
+					res.end();
+				}
+			});
+		});
+	});
+}
 
-	//get file type/extension without the period
-	var type = path.extname(req.url).replace(/\./, "");
-	if(!type){ type = "html"; }
+var shitty_words = ["an", "the", "a", "in", "is"];
 
-	//print useful information
-	console.log(`received request for ${req.url}`);
-	console.log(`received request for ${type} file extension`);
-	
-	//form path to file. defaults to index.html
-	if(req.url == "/"){
-		var filepath = path_base + default_file;
-	}else{
-		var filepath = path_base + req.url;
+function createQuery(str){
+	//separate variabels in string
+	var variables = str.split("&");
+	var queries = [];
+	var regex = "";
+	variables.forEach( function (substr) {
+		var obj = {};
+		var field = substr.split("=")[0];
+		console.log("Field: ", field);
+		var matchers = substr.split("=")[1].split("+");
+		console.log("Matchers: ", matchers);
+		matchers.forEach ( function (word) {
+			if(!shitty_words.includes(word)){
+				regex += (word + "|");
+			}	
+		});
+		
+		regex = regex.slice(0, regex.length - 1);
+		obj[field] = new RegExp(regex, 'i');
+		queries.push(obj);
+		regex = "";
+		obj = {};
+	});
+	return queries;
+}
+
+function getCollection(query){
+	var startindex = query.includes("collection=");
+	if( startindex ){
+		startindex += "collection=".length - 1;
+		let endindex = query.indexOf("&", startindex);
+		if(endindex == -1){
+			endindex = query.length;
+		}
+		var cname = query.slice(startindex, endindex);
+		console.log("REQUEST FOR COLLECTION: ", cname);
+		return cname;
 	}
+	else{
+		return "bookshelf"
+	}
+}
 
-	//Read file if not in cache
+function getFileContents(req, res, filepath){
+	var type = path.extname(req.url).replace(/\./, "");
+	if(!type){
+		type ="html";
+	}
 	if(!(filepath in cache) ){
+		//print useful information
 		fs.readFile(filepath, function(err, data) {
 			//print error code 
 			if(err){console.log(err.code);}
 			
 			//send 404.html if file requested isn't on FS
-			if (err && err.code == "ENOENT") {
-				stat = 404;
-				res.writeHead(stat, {'Content-Type': 'text/html'});
-				res.end(cache['404.html']);
+			if (err && (err.code == "ENOENT" || err.code == "ENODIR")) {
+				res.writeHead(404, {'Content-Type': 'text/html'});
+				return cache['404.html'];
 			}else{ //read file, store it in cache, and send it over the wire
-				console.log("READ FILE => ", data);
+				console.log("READ FILE => ", filepath,  data);
 				cache[filepath] = data;
-				res.writeHead(stat, {'Content-Type': 'text/' + type});
-				res.end(data);
+				res.writeHead(200, {'Content-Type': 'text/' + type});
+				return data;
 			}
-		})
+		});
 	}else{
-		//send cached file with 200 status
-		res.writeHead(stat, {'Content-Type': 'text/' + type});
-		res.write(cache[filepath]);
-		res.end();
+		res.writeHead(200, {'Content-Type': 'text/' + type});
+		return cache[filepath];
 	}
 }
 
+app.get('/', (req, res) => res.sendFile(__dirname + "/bookshelf/index.html"));
+app.get('/query', function (req, res) {
+	console.log("Parsed resource path:", req.filepath);
+	var urlObject = new url.parse(req.url, false);
+	console.log("query:", urlObject.query);
+	console.log("URL OBJECT:", urlObject);
+	if(urlObject.query){
+		res.writeHead(200, {'Content-Type': 'application/json'});
+		getObjects(req, res, createQuery(urlObject.query), getCollection(urlObject.query), function(results){
+			//send back the results of database query
+			results.forEach( function (element) {
+				console.log("Sending Object: ", element);
+				res.write(JSON.stringify(element));
+			});
+		});
+	}
+});
 
-var server = http.createServer(requestHandler);
-server.listen(port);
+app.get('/*.html', (req, res) => res.sendFile(__dirname + "/bookshelf/html" + req.path));
+app.get('/*.css', (req, res) => res.sendFile(__dirname + "/bookshelf/css" + req.path));
+app.get('/*.js', (req, res) => res.sendFile(__dirname + "/bookshelf/scripts" + req.path));
+app.get('/*.jpg', (req, res) => res.sendFile(__dirname + "/bookshelf/images" + req.path));
+app.get('/*.png', (req, res) => res.sendFile(__dirname + "/bookshelf/images" + req.path));
+
+app.listen(port);
