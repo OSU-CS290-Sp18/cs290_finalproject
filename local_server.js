@@ -14,7 +14,7 @@ var router = express.Router({
 	"caseSensitive" : true
 });
 
-app.use('/', express.static('./bookshelf'));
+app.use('/', express.static('.'));
 
 //CHANGE THIS TO classmongo
 var host = "localhost";
@@ -22,7 +22,7 @@ var host = "localhost";
 var dbname = "bookshelf";
 //dint change this
 
-var path_base = "./bookshelf";
+var path_base = "cs290_finalproject";
 var default_file = "/index.html";
 var file_ext = "html";
 
@@ -139,7 +139,7 @@ function getFileContents(req, res, filepath){
 	}
 }
 
-app.get('/', (req, res) => res.sendFile(__dirname + "/bookshelf/index.html"));
+app.get('/', (req, res) => res.sendFile(__dirname + "/index.html"));
 app.get('/query', function (req, res) {
 	console.log("Parsed resource path:", req.filepath);
 	var urlObject = new url.parse(req.url, false);
@@ -157,10 +157,10 @@ app.get('/query', function (req, res) {
 	}
 });
 
-app.get('/*.html', (req, res) => res.sendFile(__dirname + "/bookshelf/html" + req.path));
-app.get('/*.css', (req, res) => res.sendFile(__dirname + "/bookshelf/css" + req.path));
-app.get('/*.js', (req, res) => res.sendFile(__dirname + "/bookshelf/scripts" + req.path));
-app.get('/*.jpg', (req, res) => res.sendFile(__dirname + "/bookshelf/images" + req.path));
-app.get('/*.png', (req, res) => res.sendFile(__dirname + "/bookshelf/images" + req.path));
+app.get('/*.html', (req, res) => res.sendFile(__dirname + "/html" + req.path));
+app.get('/*.css', (req, res) => res.sendFile(__dirname + "/css" + req.path));
+app.get('/*.js', (req, res) => res.sendFile(__dirname + "/scripts" + req.path));
+app.get('/*.jpg', (req, res) => res.sendFile(__dirname + "/images" + req.path));
+app.get('/*.png', (req, res) => res.sendFile(__dirname + "/images" + req.path));
 
 app.listen(port);
