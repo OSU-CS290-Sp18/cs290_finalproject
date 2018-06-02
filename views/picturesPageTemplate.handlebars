@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Personal Webpage</title>
+
+    <link rel="stylesheet" href="style.css" media="screen">
+
+    <link rel="stylesheet" href="pictures_style.css" media="screen">
+
+    <script src="script.js" charset="utf-8" defer></script>
+
+    <script src="pictures_script.js" charset="utf-8" defer></script>
+    
+    <script src="pictureFrame.js" charset="utf-8" defer></script>
+
+    <script src="https://use.fontawesome.com/releases/v5.0.9/js/all.js" defer></script>
+
+    <link href="https://fonts.googleapis.com/css?family=Goudy+Bookletter+1911" rel="stylesheet">
+</head>
+
+<body class="photo-page">
+    <header>
+        <div class="header-content">
+            <i class="fas fa-images page-image"></i>
+            <h1>Photos</h1>
+            <p class="header-quote">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero, veritatis mollitia repellendus? <br><br> -Person</p>
+        </div>
+
+        <navbar>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="books.html">Bookshelf</a></li>
+                <li class="active"><a href="photos.html">Photos</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="resume.html">Resume</a></li>
+            </ul>
+        </navbar>
+    </header>
+
+    <main id="picture-container">
+        
+        {{#each photos}}
+            {{> pictureFrame}}
+        {{/each}}
+
+    </main>
+
+    <button type="button" id="add-picture-button"><i class="far fa-image"></i></button>
+
+    <div id="modal-backdrop" class="hidden"></div>
+    <div id="add-picture-modal" class="hidden">
+
+        <div class="modal-dialog">
+
+            <div class="modal-header">
+                <h3>Add a Picture</h3>
+                <button type="button" id="modal-close-button">&times;</button>
+            </div>
+
+            <div class="modal-body">
+                <form action="pictures-upload.js" method="post">
+                    <input id="picture-file-input" type="file" accept="image/*.jpg" multiple="false" name="userPhoto">
+                    <input id="modal-accept-button" type="submit" value="Submit">
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" id="modal-cancel-button">Cancel</button>
+                <button type="button" id="modal-accept-button">Add Picture</button>
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

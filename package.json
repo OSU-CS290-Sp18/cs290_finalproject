@@ -6,13 +6,14 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node local_server.js",
-    "start-OSUServer": "node osu_network_server.js"
+    "build": "handlebars views/partials/pictureFrame.handlebars -f scripts/pictureFrame.js",
+    "prestart": "npm run build"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/OSU-CS290-Sp18/cs290_finalproject.git"
   },
-  "author": "",
+  "author": "Hunter Lannon, Jeremy Lilly, Chase Stubblefield, Khoa Tran",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/OSU-CS290-Sp18/cs290_finalproject/issues"
