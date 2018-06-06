@@ -13,6 +13,13 @@ var app = express();
 var router = express.Router({
 	"caseSensitive" : true
 });
+var hbs = require('express-handlebars');
+var hbsInstance = hbs.create({
+	defaultLayout: 'navbar_only',
+	layoutsDir: __dirname + '/views/layouts/'}
+);
+app.engine('handlebars', hbsInstance.engine);
+app.set('view engine', 'handlebars');
 
 app.use('/', express.static('.'));
 
@@ -157,6 +164,11 @@ app.get('/query', function (req, res) {
 	}
 });
 
+app.get('/books.html', function (req, res) {
+	hbsInstance.renderView(path.join(__dirname, "templates/", "books.handlebars"), {books: [{thumbnail_large: "http://i.huffpost.com/gen/1645150/images/o-RICK-ASTLEY-NEVER-GONNA-WAKE-UP-facebook.jpg", authors: "Rick Astley", description: "Never gonna give you up"}]}, function (err, html){
+		res.status(200).send(html);		
+	});
+});
 app.get('/*.html', (req, res) => res.sendFile(__dirname + "/html" + req.path));
 app.get('/*.css', (req, res) => res.sendFile(__dirname + "/css" + req.path));
 app.get('/*.js', (req, res) => res.sendFile(__dirname + "/scripts" + req.path));
