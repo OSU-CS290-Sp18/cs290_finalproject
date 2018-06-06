@@ -1,11 +1,19 @@
 <article class="book">
 	<div class="book-cover">
-		<img class="book-pic" src="{{thumbnail_large}}">
-		<p>* * * * *</p>
+		<img class="book-pic" src="{{largeThumbnail}}">
 	</div>
 	<div class="book-text">
-		<p class="book-title">{{title}}</p>
-		<p class="book-author">By: {{authors}}</p>
-		<p class="book-description">{{description}}</p>
+		<span>
+			<p class="book-title">{{title}}</p>
+			<p class="book-author"> // {{authors}}</p>
+		</span>
+		<img class="rating" src="rating_{{rating}}.jpg"/>
+		<span class="book-description">{{description}}</span>
+		{{#if quotes}}
+			<h3 class="book-quote quote-heading">Quotes:</h3>
+		{{/if}}
+		{{#each quotes}}
+			<p class="book-quote">{{person}} ~ "{{quote}}"</p>	
+		{{/each}}
 	</div>
 </article>

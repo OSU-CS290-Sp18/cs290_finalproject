@@ -164,15 +164,28 @@ app.get('/query', function (req, res) {
 	}
 });
 
-app.get('/books.html', function (req, res) {
-	hbsInstance.renderView(path.join(__dirname, "templates/", "books.handlebars"), {books: [{thumbnail_large: "http://i.huffpost.com/gen/1645150/images/o-RICK-ASTLEY-NEVER-GONNA-WAKE-UP-facebook.jpg", authors: "Rick Astley", description: "Never gonna give you up"}]}, function (err, html){
-		res.status(200).send(html);		
+app.get('/books.html*', function (req, res) {
+	var context = {};
+
+	MongoClient.connect(mongourl, function(err, client){
+		var db = client.db("bookshelf");
+		var collection = db.collection("mybooks");
+		var allResults = [];
+		collection.find({}).toArray(function(err, results){
+				results.forEach(function (element){
+					allResults.push(element);
+				});
+				context = {books: allResults};
+				hbsInstance.renderView(path.join(__dirname, "templates/", "books.handlebars"), context, function (err, html){
+					res.status(200).send(html);		
+				});
+		});		
 	});
 });
-app.get('/*.html', (req, res) => res.sendFile(__dirname + "/html" + req.path));
-app.get('/*.css', (req, res) => res.sendFile(__dirname + "/css" + req.path));
-app.get('/*.js', (req, res) => res.sendFile(__dirname + "/scripts" + req.path));
-app.get('/*.jpg', (req, res) => res.sendFile(__dirname + "/images" + req.path));
-app.get('/*.png', (req, res) => res.sendFile(__dirname + "/images" + req.path));
+app.get('/*.html*', (req, res) => res.sendFile(__dirname + "/html" + req.path));
+app.get('/*.css*', (req, res) => res.sendFile(__dirname + "/css" + req.path));
+app.get('/*.js*', (req, res) => res.sendFile(__dirname + "/scripts" + req.path));
+app.get('/*.jpg*', (req, res) => res.sendFile(__dirname + "/images" + req.path));
+app.get('/*.png*', (req, res) => res.sendFile(__dirname + "/images" + req.path));
 
 app.listen(port);

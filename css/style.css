@@ -24,6 +24,10 @@ a {
     color: black;
 }
 
+span p{
+	display: inline;
+}
+
 .page-image {
     color: black;
     font-size: 60px;
@@ -70,7 +74,7 @@ navbar li:hover {
 
 .book {
     display: flex;
-    background-color: antiquewhite;
+    background-color: white;
     padding: 10px;
     border-radius: 3px;
     margin: 10px;
@@ -78,6 +82,29 @@ navbar li:hover {
 
 .book div {
     margin: 20px;
+}
+
+.book-title, .book-author {
+	font-size: 20px;
+}
+.book-description {
+	line-height: 20px;
+}
+.book-author {
+	color: #999999;
+}
+
+.rating {
+	display: block;
+}
+
+.book-quote {
+	margin: 0px;
+	padding: 0px;
+}
+
+.quote-heading {
+	margin-top: 5px;
 }
 
 .book-pic {
