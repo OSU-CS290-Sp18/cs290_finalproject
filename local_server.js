@@ -23,26 +23,14 @@ app.set('view engine', 'handlebars');
 
 app.use('/', express.static('.'));
 
-//CHANGE THIS TO classmongo
 var host = "localhost";
-//CHANGE THIS TO cs290_lannonh
 var dbname = "bookshelf";
-//dint change this
-
-var path_base = "cs290_finalproject";
-var default_file = "/index.html";
-var file_ext = "html";
-
-//404.html is always in cache
-var cache = {};
-fs.readFile("./bookshelf/404.html", function(err, data){
-	cache["404.html"] = data;
-});
 
 //determine which port to listen to
 port = 1465;
 console.log("using port: ", port);
 
+//string to connect to any database
 var mongourl = "mongodb://" + host + ":27017";
 
 function getObjects(req, res, queryObjects, collectionName, callback){
@@ -83,10 +71,11 @@ function createQuery(str){
 	variables.forEach( function (substr) {
 		var obj = {};
 		var field = substr.split("=")[0];
-		console.log("Field: ", field);
 		var matchers = substr.split("=")[1].split("+");
+		console.log("Field: ", field);
 		console.log("Matchers: ", matchers);
 		matchers.forEach ( function (word) {
+			//remove shit words from query because they match basically everything
 			if(!shitty_words.includes(word)){
 				regex += (word + "|");
 			}	
@@ -118,34 +107,6 @@ function getCollection(query){
 	}
 }
 
-function getFileContents(req, res, filepath){
-	var type = path.extname(req.url).replace(/\./, "");
-	if(!type){
-		type ="html";
-	}
-	if(!(filepath in cache) ){
-		//print useful information
-		fs.readFile(filepath, function(err, data) {
-			//print error code 
-			if(err){console.log(err.code);}
-			
-			//send 404.html if file requested isn't on FS
-			if (err && (err.code == "ENOENT" || err.code == "ENODIR")) {
-				res.writeHead(404, {'Content-Type': 'text/html'});
-				return cache['404.html'];
-			}else{ //read file, store it in cache, and send it over the wire
-				console.log("READ FILE => ", filepath,  data);
-				cache[filepath] = data;
-				res.writeHead(200, {'Content-Type': 'text/' + type});
-				return data;
-			}
-		});
-	}else{
-		res.writeHead(200, {'Content-Type': 'text/' + type});
-		return cache[filepath];
-	}
-}
-
 app.get('/', (req, res) => res.sendFile(__dirname + "/index.html"));
 app.get('/query', function (req, res) {
 	console.log("Parsed resource path:", req.filepath);
@@ -165,27 +126,23 @@ app.get('/query', function (req, res) {
 });
 
 app.get('/books.html*', function (req, res) {
-	var context = {};
-
 	MongoClient.connect(mongourl, function(err, client){
 		var db = client.db("bookshelf");
 		var collection = db.collection("mybooks");
 		var allResults = [];
+		var context = {books: allResults, quote: "Books, they are on the shelves", person: "Confucious", pagename: "Bookshelf"};
+		//if collection exists
 		if(collection){
 			collection.find({}).toArray(function(err, results){
 					results.forEach(function (element){
 						allResults.push(element);
 					});
-					context = {books: allResults};
-					hbsInstance.renderView(path.join(__dirname, "templates/", "books.handlebars"), context, function (err, html){
-						res.status(200).send(html);		
-					});
+					context.books = allResults;
 			});		
-		}else{
-			hbsInstance.renderView(path.join(__dirname, "templates/", "books.handlebars"), context, function (err, html){
-				res.status(200).send(html);		
-			});
-		  }
+		}
+		hbsInstance.renderView(path.join(__dirname, "templates/", "books.handlebars"), context, function (err, html){
+			res.status(200).send(html);		
+		});
 	});
 
 });
@@ -195,7 +152,6 @@ app.delete('/delete_book/:isbn', function (req, res, next){
 	MongoClient.connect(mongourl, function(err, client){
 		var db = client.db("bookshelf");
 		var collection = db.collection("mybooks");
-		var allResults = [];
 		collection.deleteOne({isbn_10: req.params.isbn }, {}, function (err, result){
 			if(err){
 				res.status(204).send("No book found");
