@@ -1,22 +1,48 @@
+
+
+
 body {
     margin: 0;
-    font-family: 'Goudy Bookletter 1911', serif;
-    background-color: whitesmoke;
+    font-family: 'EB Garamond', serif;
+    background-color: white;
 }
 
+
+/* Background photo auto scales */
 header {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    background-image: url(landscape.jpg);
-    height: 100vh;
+    justify-content: center; 
+    align-items: center; 
+    
+    width: 100%;
+    min-height: 100vh;
+    background-size: cover; /* or contain depending on what you want */
+    background-position: center center;
+    background-repeat: no-repeat;
+    text-align:center;
+    margin:auto;
+    padding:0;
+    
 }
 
+/* Various pictures for different headers */
+header.blog { background-image: url(travelBlog.jpg) }
+header.intro { background-image: url(intro.jpg) }
+header.photos { background-image: url(photos.jpg) }
+header.bookshelf { background-image: url(library.jpg) }
+header.resume { background-image: url(resume.jpg) }
+
+/* WHITE BANNER */
 .header-content {
     background-color: rgba(255, 255, 255, 0.9);
     width: 100%;
     text-align: center;
-    padding: 50px 0px;
+    padding: 25px 100px;
+}
+
+img.page-image {
+    width: 20%;
+    border-radius: 100%;
 }
 
 a {
@@ -24,17 +50,24 @@ a {
     color: black;
 }
 
-.page-image {
-    color: black;
-    font-size: 60px;
-    background-color: lightblue;
-    border-radius: 100%;
-    padding: 25px;
+h1 {
+    font-family: 'Dancing Script', cursive;
+    font-size: 4vw;
+}
+
+p {
+    font-family: 'EB Garamond', serif;
+    font-size: 1.75vw;
+}
+
+span p{
+	display: inline;
 }
 
 navbar {
     position: absolute;
     left: 0;
+    top: 15%;
 }
 
 navbar ul {
@@ -43,9 +76,12 @@ navbar ul {
 
 navbar li {
     display: block;
-    padding: 5px 8px;
-    margin: 5px 0px;
+    padding: 10px 15px;
+    margin: 12.5px 0px;
     border: solid black 2px;
+    font-family: 'Comfortaa', cursive;
+    font-size: 1.75vw;
+
 }
 
 navbar li.active {
@@ -54,8 +90,43 @@ navbar li.active {
 }
 
 navbar li:hover {
-    background-color: #bfbfbf;
+    border: solid #bfbfbf 2px;
 }
+
+/* SCREENS UNDER 992px -----------------------------------  */
+@media screen and (max-width: 992px) {
+    img.page-image {
+        width: 30%;
+    }
+    h1 {
+        font-size: 5vw;
+    }
+    p {
+        font-size: 2.5vw;
+    }
+    navbar li {
+        font-size: 2.0vw;
+    }        
+}
+
+/* SCREENS UNDER 600px */
+@media screen and (max-width: 600px) {
+    img.page-image {
+        width: 55%
+    }
+    h1 {
+        font-size: 6vw;
+    }
+    p {
+        font-size: 3.5vw;
+    }
+    navbar li {
+        font-size: 3.0vw;
+    }   
+}
+
+/* -------------------------------------------------------  */
+
 
 .hidden {
     display: none;
@@ -69,20 +140,82 @@ navbar li:hover {
 }
 
 .book {
+	width: 100%;
+}
+
+.book {
     display: flex;
-    background-color: antiquewhite;
+    background-color: white;
     padding: 10px;
     border-radius: 3px;
     margin: 10px;
 }
-
 .book div {
     margin: 20px;
+}
+
+.book-title, .book-author {
+	width: 100%;
+	font-size: 20px;
+}
+.book-description {
+	width: 100%;
+	line-height: 20px;
+}
+.book-author {
+	color: #999999;
+}
+
+.rating {
+	display: block;
+	margin: 0px;
+	padding: 0px;
+	font-size: 17px;
+}
+
+.book-quote {
+	margin: 0px;
+	padding: 0px;
+}
+
+.quote-heading {
+	margin-top: 5px;
 }
 
 .book-pic {
     width: 150px;
     height: 200px;
 }
+table {
+    border-collapse: collapse;
+    max-width: 70%;
+    margin: 20px auto;
 
-/*************************/
+}
+
+tr {
+    padding: 5px 10px;
+}
+
+tr.resume-category {
+    border-top: 2px solid purple;
+}
+
+th, td {
+    padding: 0 20px;
+}
+
+th {
+    padding-top: 20px;
+    text-align: left;
+}
+
+article div.book-text{
+	width:100%;
+}
+
+img.delete-button, img.edit-button{
+	width: 20px;
+	height: 20px;
+	float: right;
+}

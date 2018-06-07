@@ -14,6 +14,13 @@ var app = express();
 var router = express.Router({
     "caseSensitive": true
 });
+var hbs = require('express-handlebars');
+var hbsInstance = hbs.create({
+	defaultLayout: 'navbar_only',
+	layoutsDir: __dirname + '/views/layouts/'}
+);
+app.engine('handlebars', hbsInstance.engine);
+app.set('view engine', 'handlebars');
 
 app.engine("handlebars", exphbs());
 app.set("view engine", "handlebars");
@@ -37,7 +44,7 @@ fs.readFile("./bookshelf/404.html", function (err, data) {
 });
 
 //determine which port to listen to
-port = process.env.PORT || 3000;
+port = 1465;
 console.log("using port: ", port);
 
 var mongourl = "mongodb://" + host + ":27017";
@@ -181,11 +188,51 @@ app.get("/photos.html", function (req, res, next) {
 });
 
 /**************************************/
+app.get('/books.html*', function (req, res) {
+	var context = {};
 
-app.get('/*.html', (req, res) => res.sendFile(__dirname + "/html" + req.path));
-app.get('/*.css', (req, res) => res.sendFile(__dirname + "/css" + req.path));
-app.get('/*.js', (req, res) => res.sendFile(__dirname + "/scripts" + req.path));
-app.get('/*.jpg', (req, res) => res.sendFile(__dirname + "/images" + req.path));
-app.get('/*.png', (req, res) => res.sendFile(__dirname + "/images" + req.path));
+	MongoClient.connect(mongourl, function(err, client){
+		var db = client.db("bookshelf");
+		var collection = db.collection("mybooks");
+		var allResults = [];
+		if(collection){
+			collection.find({}).toArray(function(err, results){
+					results.forEach(function (element){
+						allResults.push(element);
+					});
+					context = {books: allResults};
+					hbsInstance.renderView(path.join(__dirname, "templates/", "books.handlebars"), context, function (err, html){
+						res.status(200).send(html);		
+					});
+			});		
+		}else{
+			hbsInstance.renderView(path.join(__dirname, "templates/", "books.handlebars"), context, function (err, html){
+				res.status(200).send(html);		
+			});
+		  }
+	});
+
+});
+
+app.delete('/delete_book/:isbn', function (req, res, next){
+	console.log("RECIEVED DELETE:", req.url);
+	MongoClient.connect(mongourl, function(err, client){
+		var db = client.db("bookshelf");
+		var collection = db.collection("mybooks");
+		var allResults = [];
+		collection.deleteOne({isbn_10: req.params.isbn }, {}, function (err, result){
+			if(err){
+				res.status(204).send("No book found");
+			}else{
+				res.status(200).send(result);
+			}
+		});		
+	});
+});
+app.get('/*.html*', (req, res) => res.sendFile(__dirname + "/html" + req.path));
+app.get('/*.css*', (req, res) => res.sendFile(__dirname + "/css" + req.path));
+app.get('/*.js*', (req, res) => res.sendFile(__dirname + "/scripts" + req.path));
+app.get('/*.jpg*', (req, res) => res.sendFile(__dirname + "/images" + req.path));
+app.get('/*.png*', (req, res) => res.sendFile(__dirname + "/images" + req.path));
 
 app.listen(port);
