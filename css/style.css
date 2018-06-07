@@ -24,6 +24,10 @@ a {
     color: black;
 }
 
+span p{
+	display: inline;
+}
+
 .page-image {
     color: black;
     font-size: 60px;
@@ -69,15 +73,46 @@ navbar li:hover {
 }
 
 .book {
+	width: 100%;
+}
+
+.book {
     display: flex;
-    background-color: antiquewhite;
+    background-color: white;
     padding: 10px;
     border-radius: 3px;
     margin: 10px;
 }
-
 .book div {
     margin: 20px;
+}
+
+.book-title, .book-author {
+	width: 100%;
+	font-size: 20px;
+}
+.book-description {
+	width: 100%;
+	line-height: 20px;
+}
+.book-author {
+	color: #999999;
+}
+
+.rating {
+	display: block;
+	margin: 0px;
+	padding: 0px;
+	font-size: 17px;
+}
+
+.book-quote {
+	margin: 0px;
+	padding: 0px;
+}
+
+.quote-heading {
+	margin-top: 5px;
 }
 
 .book-pic {
@@ -85,4 +120,13 @@ navbar li:hover {
     height: 200px;
 }
 
+article div.book-text{
+	width:100%;
+}
+
+img.delete-button {
+	width: 20px;
+	height: 20px;
+	float: right;
+}
 /*************************/

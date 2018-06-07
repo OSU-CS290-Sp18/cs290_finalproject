@@ -1,0 +1,24 @@
+<article class="book" id="{{isbn_10}}">
+	<div class="book-cover">
+		<img class="book-pic" src="{{largeThumbnail}}">
+	</div>
+	<div class="book-text">
+		<span>
+			<p class="book-title">{{title}}</p>
+			<p class="book-author"> // {{authors}}</p>
+			<img src="x.png" class="delete-button"/>
+		</span>
+		{{#if rating}}
+			<img class="rating" src="rating_{{rating}}.jpg"/>
+		{{else}}
+			<p class="rating"><strong>No Rating</strong></p>
+		{{/if}}
+		<span class="book-description">{{description}}</span>
+		{{#if quotes}}
+			<h3 class="book-quote quote-heading">Quotes:</h3>
+		{{/if}}
+		{{#each quotes}}
+			<p class="book-quote">{{person}} ~ "{{quote}}"</p>	
+		{{/each}}
+	</div>
+</article>
