@@ -23,21 +23,9 @@ app.set('view engine', 'handlebars');
 
 app.use('/', express.static('.'));
 
-//CHANGE THIS TO classmongo
 var host = "classmongo.engr.oregonstate.edu";
-//CHANGE THIS TO cs290_lannonh
 var dbname = "cs290_lannonh";
-//dint change this
 
-var path_base = "cs290_finalproject";
-var default_file = "/index.html";
-var file_ext = "html";
-
-//404.html is always in cache
-var cache = {};
-fs.readFile("./bookshelf/404.html", function(err, data){
-	cache["404.html"] = data;
-});
 
 //determine which port to listen to
 port = 1465;
