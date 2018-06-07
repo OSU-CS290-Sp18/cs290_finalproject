@@ -171,16 +171,23 @@ app.get('/books.html*', function (req, res) {
 		var db = client.db("bookshelf");
 		var collection = db.collection("mybooks");
 		var allResults = [];
-		collection.find({}).toArray(function(err, results){
-				results.forEach(function (element){
-					allResults.push(element);
-				});
-				context = {books: allResults};
-				hbsInstance.renderView(path.join(__dirname, "templates/", "books.handlebars"), context, function (err, html){
-					res.status(200).send(html);		
-				});
-		});		
+		if(collection){
+			collection.find({}).toArray(function(err, results){
+					results.forEach(function (element){
+						allResults.push(element);
+					});
+					context = {books: allResults};
+					hbsInstance.renderView(path.join(__dirname, "templates/", "books.handlebars"), context, function (err, html){
+						res.status(200).send(html);		
+					});
+			});		
+		}else{
+			hbsInstance.renderView(path.join(__dirname, "templates/", "books.handlebars"), context, function (err, html){
+				res.status(200).send(html);		
+			});
+		  }
 	});
+
 });
 
 app.delete('/delete_book/:isbn', function (req, res, next){

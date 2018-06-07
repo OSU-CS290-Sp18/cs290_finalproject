@@ -124,7 +124,7 @@ article div.book-text{
 	width:100%;
 }
 
-img.delete-button {
+img.delete-button, img.edit-button{
 	width: 20px;
 	height: 20px;
 	float: right;
