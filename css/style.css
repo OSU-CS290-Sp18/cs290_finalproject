@@ -186,6 +186,29 @@ navbar li:hover {
     width: 150px;
     height: 200px;
 }
+table {
+    border-collapse: collapse;
+    max-width: 70%;
+    margin: 20px auto;
+
+}
+
+tr {
+    padding: 5px 10px;
+}
+
+tr.resume-category {
+    border-top: 2px solid purple;
+}
+
+th, td {
+    padding: 0 20px;
+}
+
+th {
+    padding-top: 20px;
+    text-align: left;
+}
 
 article div.book-text{
 	width:100%;
@@ -196,4 +219,3 @@ img.delete-button, img.edit-button{
 	height: 20px;
 	float: right;
 }
-/*************************/
