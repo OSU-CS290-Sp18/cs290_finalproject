@@ -121,33 +121,33 @@ function getCollection(query){
 	}
 }
 
-function getFileContents(req, res, filepath){
-	var type = path.extname(req.url).replace(/\./, "");
-	if(!type){
-		type ="html";
-	}
-	if(!(filepath in cache) ){
-		//print useful information
-		fs.readFile(filepath, function(err, data) {
-			//print error code 
-			if(err){console.log(err.code);}
+//function getFileContents(req, res, filepath){
+	//var type = path.extname(req.url).replace(/\./, "");
+	//if(!type){
+		//type ="html";
+	//}
+	//if(!(filepath in cache) ){
+		////print useful information
+		//fs.readFile(filepath, function(err, data) {
+			////print error code 
+			//if(err){console.log(err.code);}
 			
-			//send 404.html if file requested isn't on FS
-			if (err && (err.code == "ENOENT" || err.code == "ENODIR")) {
-				res.writeHead(404, {'Content-Type': 'text/html'});
-				return cache['404.html'];
-			}else{ //read file, store it in cache, and send it over the wire
-				console.log("READ FILE => ", filepath,  data);
-				cache[filepath] = data;
-				res.writeHead(200, {'Content-Type': 'text/' + type});
-				return data;
-			}
-		});
-	}else{
-		res.writeHead(200, {'Content-Type': 'text/' + type});
-		return cache[filepath];
-	}
-}
+			////send 404.html if file requested isn't on FS
+			//if (err && (err.code == "ENOENT" || err.code == "ENODIR")) {
+				//res.writeHead(404, {'Content-Type': 'text/html'});
+				//return cache['404.html'];
+			//}else{ //read file, store it in cache, and send it over the wire
+				//console.log("READ FILE => ", filepath,  data);
+				//cache[filepath] = data;
+				//res.writeHead(200, {'Content-Type': 'text/' + type});
+				//return data;
+			//}
+		//});
+	//}else{
+		//res.writeHead(200, {'Content-Type': 'text/' + type});
+		//return cache[filepath];
+	//}
+//}
 
 app.get('/', (req, res) => res.sendFile(__dirname + "/index.html"));
 app.get('/query', function (req, res) {
@@ -177,21 +177,18 @@ app.get('/books.html*', function (req, res) {
 		var db = client.db("cs290_lannonh");
 		var collection = db.collection("mybooks");
 		var allResults = [];
+		var context = {books: allResults, quote: "Books, they are on the shelves", person: "Confucious", pagename: "Bookshelf"};
 		if(collection){
 			collection.find({}).toArray(function(err, results){
 					results.forEach(function (element){
 						allResults.push(element);
 					});
-					context = {books: allResults};
-					hbsInstance.renderView(path.join(__dirname, "templates/", "books.handlebars"), context, function (err, html){
-						res.status(200).send(html);		
-					});
+					context.books = allResults};
 			});		
-		}else{
-			hbsInstance.renderView(path.join(__dirname, "templates/", "books.handlebars"), context, function (err, html){
-				res.status(200).send(html);		
-			});
 		}
+		hbsInstance.renderView(path.join(__dirname, "templates/", "books.handlebars"), context, function (err, html){
+			res.status(200).send(html);		
+		});
 	});
 });
 app.delete('/delete_book/:isbn', function (req, res, next){
