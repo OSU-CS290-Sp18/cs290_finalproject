@@ -1,4 +1,4 @@
-<article class="book">
+<article class="book" id="{{isbn_10}}">
 	<div class="book-cover">
 		<img class="book-pic" src="{{largeThumbnail}}">
 	</div>
@@ -6,8 +6,13 @@
 		<span>
 			<p class="book-title">{{title}}</p>
 			<p class="book-author"> // {{authors}}</p>
+			<img src="x.png" class="delete-button"/>
 		</span>
-		<img class="rating" src="rating_{{rating}}.jpg"/>
+		{{#if rating}}
+			<img class="rating" src="rating_{{rating}}.jpg"/>
+		{{else}}
+			<p class="rating"><strong>No Rating</strong></p>
+		{{/if}}
 		<span class="book-description">{{description}}</span>
 		{{#if quotes}}
 			<h3 class="book-quote quote-heading">Quotes:</h3>

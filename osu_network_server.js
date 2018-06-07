@@ -40,7 +40,7 @@ fs.readFile("./bookshelf/404.html", function(err, data){
 });
 
 //determine which port to listen to
-port = process.env.PORT || 3000;
+port = 1465;
 console.log("using port: ", port);
 
 const mongourl = "mongodb://cs290_lannonh:bookshelf@" + host + ":27017/?authMechanism=MONGODB-CR&authSource=cs290_lannonh";
@@ -188,6 +188,21 @@ app.get('/books.html*', function (req, res) {
 				hbsInstance.renderView(path.join(__dirname, "templates/", "books.handlebars"), context, function (err, html){
 					res.status(200).send(html);		
 				});
+		});		
+	});
+});
+app.delete('/delete_book/:isbn', function (req, res, next){
+	console.log("RECIEVED DELETE:", req.url);
+	MongoClient.connect(mongourl, function(err, client){
+		var db = client.db("cs290_lannonh");
+		var collection = db.collection("mybooks");
+		var allResults = [];
+		collection.deleteOne({isbn_10: req.params.isbn }, {}, function (err, result){
+			if(err){
+				res.status(204).send("No book found");
+			}else{
+				res.status(200).send(result);
+			}
 		});		
 	});
 });
