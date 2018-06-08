@@ -5,13 +5,10 @@
   "main": "local_server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-
     "start": "node local_server.js",
     "build": "handlebars views/partials/pictureFrame.handlebars -f scripts/pictureFrame.js && handlebars templates/books.handlebars -f compiled/books.js",
-    "prestart": "npm run build"
-    "start": "node local_server.js",
+    "prestart": "npm run build",
     "start-OSUServer": "handlebars views/partials/pictureFrame.handlebars -f scripts/pictureFrame.js && handlebars templates/books.handlebars -f compiled/books.js && node osu_network_server.js"
-
   },
   "repository": {
     "type": "git",
