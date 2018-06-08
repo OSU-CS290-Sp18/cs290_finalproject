@@ -5,14 +5,19 @@
   "main": "local_server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "handlebars templates/books.handlebars -f compiled/books.js && node local_server.js",
-    "start-OSUServer": "handlebars templates/books.handlebars -f compiled/books.js && node osu_network_server.js"
+
+    "start": "node local_server.js",
+    "build": "handlebars views/partials/pictureFrame.handlebars -f scripts/pictureFrame.js && handlebars templates/books.handlebars -f compiled/books.js",
+    "prestart": "npm run build"
+    "start": "node local_server.js",
+    "start-OSUServer": "handlebars views/partials/pictureFrame.handlebars -f scripts/pictureFrame.js && handlebars templates/books.handlebars -f compiled/books.js && node osu_network_server.js"
+
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/OSU-CS290-Sp18/cs290_finalproject.git"
   },
-  "author": "",
+  "author": "Hunter Lannon, Jeremy Lilly, Chase Stubblefield, Khoa Tran",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/OSU-CS290-Sp18/cs290_finalproject/issues"
