@@ -5,10 +5,10 @@
   "main": "local_server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node local_server.js",
+    "start": "node osu_network_server.js",
     "build": "handlebars views/partials/pictureFrame.handlebars -f scripts/pictureFrame.js && handlebars templates/books.handlebars -f compiled/books.js",
     "prestart": "npm run build",
-    "start-OSUServer": "handlebars views/partials/pictureFrame.handlebars -f scripts/pictureFrame.js && handlebars templates/books.handlebars -f compiled/books.js && node osu_network_server.js"
+    "start-local": "handlebars views/partials/pictureFrame.handlebars -f scripts/pictureFrame.js && handlebars templates/books.handlebars -f compiled/books.js && node local_server.js"
   },
   "repository": {
     "type": "git",
@@ -21,9 +21,12 @@
   },
   "homepage": "https://github.com/OSU-CS290-Sp18/cs290_finalproject#readme",
   "dependencies": {
+    "body-parser": "^1.18.3",
     "express": "^4.16.3",
     "express-handlebars": "^3.0.0",
+    "gridfs-stream": "^1.1.1",
     "handlebars": "^4.0.11",
-    "mongodb": "^3.1.0-beta4"
+    "mongodb": "^3.1.0-beta4",
+    "nodemon": "^1.17.5"
   }
 }

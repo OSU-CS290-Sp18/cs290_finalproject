@@ -6,6 +6,7 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 const url = require('url');
+var bodyParser = require('body-parser');
 const MongoClient = require('mongodb').MongoClient;
 const assert = require('assert');
 var express = require('express');
@@ -20,6 +21,14 @@ var hbsInstance = hbs.create({
 );
 app.engine('handlebars', hbsInstance.engine);
 app.set('view engine', 'handlebars');
+
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({
+    extended: false
+}));
+
+// parse application/json
+app.use(bodyParser.json());
 
 app.use('/', express.static('.'));
 
@@ -144,7 +153,7 @@ app.get('/books.html*', function (req, res) {
 					results.forEach(function (element){
 						allResults.push(element);
 					});
-					context.books = allResults};
+					context.books = allResults;
 			});		
 		}
 		hbsInstance.renderView(path.join(__dirname, "templates/", "books.handlebars"), context, function (err, html){
@@ -167,6 +176,54 @@ app.delete('/delete_book/:isbn', function (req, res, next){
 		});		
 	});
 });
+
+/**************************************/
+
+app.get("/photos.html*", function (req, res, next) {
+    MongoClient.connect(mongourl, {
+        useNewUrlParser: true
+    }, function (err, client) {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log("Photos page connection to DB (" + mongourl + ") established.");
+            var db = client.db(dbname);
+            var photoCollection = db.collection("userPhotos");
+
+            photoCollection.find().toArray(function (err, photos) {
+                if (err) {
+                    res.status(500).send("Error fetching photos from DB.");
+                    console.log(err);
+                } else {
+                    res.status(200).render('picturesPageTemplate', {
+                        photos: photos
+                    });
+                }
+            });
+        }
+    });
+});
+
+app.post("/uploadPhoto", function (req, res, next) {
+    MongoClient.connect(mongourl, {
+        useNewUrlParser: true
+    }, function (err, client) {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log("Photos page connection to DB (" + mongourl + ") established for upload.")
+            var db = client.db(dbname);
+            var collection = db.collection("userPhotos");
+            
+            console.log("URL to be added:" + req.body.url);
+            
+            collection.insertOne({photoSrc: req.body.url});
+        }
+    });
+});
+
+/**************************************/
+
 app.get('/*.html*', (req, res) => res.sendFile(__dirname + "/html" + req.path));
 app.get('/*.css*', (req, res) => res.sendFile(__dirname + "/css" + req.path));
 app.get('/*.js*', (req, res) => res.sendFile(__dirname + "/scripts" + req.path));

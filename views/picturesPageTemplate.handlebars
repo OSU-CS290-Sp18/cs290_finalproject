@@ -12,12 +12,12 @@
     <script src="script.js" charset="utf-8" defer></script>
 
     <script src="pictures_script.js" charset="utf-8" defer></script>
-    
+
     <script src="pictureFrame.js" charset="utf-8" defer></script>
 
     <script src="https://use.fontawesome.com/releases/v5.0.9/js/all.js" defer></script>
 
-   <link href="https://fonts.googleapis.com/css?family=Comfortaa|Dancing+Script:700|EB+Garamond" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Comfortaa|Dancing+Script:700|EB+Garamond" rel="stylesheet">
 </head>
 
 <body class="photo-page">
@@ -25,7 +25,7 @@
         <div class="header-content">
             <img src="PhotosIcon.png" class="photos page-image" />
             <h1>Photos</h1>
-            <p class="header-quote">“My life is shaped by the urgent need to wander and observe, and my camera is my passport.”<br><br>Steve McCurry
+            <p class="header-quote">“My life is shaped by the urgent need to wander and observe, and my camera is my passport.”<br><br>-Steve McCurry
             </p>
         </div>
 
@@ -41,10 +41,8 @@
     </header>
 
     <main id="picture-container">
-        
-        {{#each photos}}
-            {{> pictureFrame}}
-        {{/each}}
+
+        {{#each photos}} {{> pictureFrame}} {{/each}}
 
     </main>
 
@@ -61,14 +59,15 @@
             </div>
 
             <div class="modal-body">
-                <form action="pictures-upload.js" method="post">
+                <label for="pic-input">Photo URL: </label>
+                <input type="text" id="pic-url-input">
+                <!-- <form enctype="multipart/form-data">
                     <input id="picture-file-input" type="file" accept="image/*.jpg" multiple="false" name="userPhoto">
                     <input id="modal-accept-button" type="submit" value="Submit">
-                </form>
+                </form> !-->
             </div>
 
             <div class="modal-footer">
-                <button type="button" id="modal-cancel-button">Cancel</button>
                 <button type="button" id="modal-accept-button">Add Picture</button>
             </div>
 
