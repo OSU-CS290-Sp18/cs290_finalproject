@@ -16,33 +16,65 @@ function closeModal() {
 
 document.getElementById("add-picture-button").onclick = openModal;
 
-document.getElementById("modal-cancel-button").onclick = closeModal;
 document.getElementById("modal-close-button").onclick = closeModal;
+
 
 /* Adding a picture */
 
-var input = document.getElementById("picture-file-input");
+//var input = document.getElementById("picture-file-input");
+var input = document.getElementById("pic-url-input");
 var pics = document.getElementById("picture-container");
 
 function addPicture() {
-    if (input.value != "") {
+
+    /*NEED TO UPLOAD PHOTO HERE*/
+    
+    if(input.value != "") {
+        var request = new XMLHttpRequest();
         
-        /*NEED TO UPLOAD PHOTO HERE*/
+        request.open("POST", "uploadPhoto");
         
-        var new_pic = document.createElement("article");
-
-        new_pic.classList.add("picture-frame");
-
-        new_pic.innerHTML = "<img src='" + input.value + "' class='picture'>"
-
-        pics.append(new_pic);
+        var url = input.value;
         
-        input.value = "";
-
+        var obj = {
+          url: url  
+        };
+        
+        var req = JSON.stringify(obj);
+        
+        request.setRequestHeader('Content-Type', 'application/json');
+        request.send(req);
+        
         closeModal();
     } else {
-        alert("No file provided.");
+        alert("No URL provided.");
     }
+
+    /*if (input.files[0] != null) {
+
+        var request = new XMLHttpRequest();
+        
+        request.open("POST", "uploadPhoto");
+        
+        request.responseType = "arraybuffer";
+        
+        var reader = new FileReader();
+        
+        reader.readAsArrayBuffer(input.files[0]);
+        
+        var file = reader.result;
+        
+        var photoObj = {
+            photo: file
+        };
+
+        var requestBody = JSON.stringify(photoObj);
+
+        request.send(requestBody);
+        
+        request.send(file);
+        
+        closeModal();*/
 }
 
 document.getElementById("modal-accept-button").onclick = addPicture;
