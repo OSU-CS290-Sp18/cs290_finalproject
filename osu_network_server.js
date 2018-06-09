@@ -196,7 +196,7 @@ app.get("/photos.html*", function (req, res, next) {
                     console.log(err);
                 } else {
                     res.status(200).render('picturesPageTemplate', {
-                        photos: photos
+                        photos: photos, layout: "pictures_layout" 
                     });
                 }
             });
