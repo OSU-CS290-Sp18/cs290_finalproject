@@ -28,23 +28,33 @@ var pics = document.getElementById("picture-container");
 function addPicture() {
 
     /*NEED TO UPLOAD PHOTO HERE*/
-    
-    if(input.value != "") {
-        var request = new XMLHttpRequest();
-        
-        request.open("POST", "uploadPhoto");
-        
+
+    if (input.value != "") {
+
         var url = input.value;
-        
+
+        var pictureFrame = Handlebars.templates.pictureFrame;
+        var newPic = pictureFrame({
+            photoSrc: url
+        });
+
+        pics.insertAdjacentHTML("beforeend", newPic);
+
+        var request = new XMLHttpRequest();
+
+        request.open("POST", "uploadPhoto");
+
         var obj = {
-          url: url  
+            url: url
         };
-        
+
         var req = JSON.stringify(obj);
-        
+
         request.setRequestHeader('Content-Type', 'application/json');
         request.send(req);
-        
+
+        input.value = "";
+
         closeModal();
     } else {
         alert("No URL provided.");
