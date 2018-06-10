@@ -10,7 +10,7 @@ var bodyParser = require('body-parser');
 const MongoClient = require('mongodb').MongoClient;
 const assert = require('assert');
 var express = require('express');
-var app = express(); 
+var app = express();
 var router = express.Router({
 	"caseSensitive" : true
 });
@@ -34,8 +34,10 @@ app.use('/', express.static('.'));
 
 var host = "classmongo.engr.oregonstate.edu";
 var dbname = "cs290_lannonh";
+var bodyParser = require('body-parser')
 
-
+app.use(bodyParser());
+app.use(bodyParser.json());
 //determine which port to listen to
 port = 1465;
 console.log("using port: ", port);
@@ -59,7 +61,6 @@ function getObjects(req, res, queryObjects, collectionName, callback){
 					callback(false);
 				}else{
 					console.log("THE QUERY ITSELF", queryObject);
-					console.log("RESULTS OF QUERY: ", results);
 					results.forEach(function (element){
 						allResults.push(element);
 					});
@@ -124,22 +125,36 @@ app.get('/query', function (req, res) {
 	console.log("Parsed resource path:", req.filepath);
 	var urlObject = new url.parse(req.url, false);
 	console.log("query:", urlObject.query);
-	console.log("URL OBJECT:", urlObject);
 	if(urlObject.query){
 		res.writeHead(200, {'Content-Type': 'application/json'});
 		getObjects(req, res, createQuery(urlObject.query), getCollection(urlObject.query), function(results){
 			//send back the results of database query
-			results.forEach( function (element) {
-				console.log("Sending Object: ", element);
-				res.write(JSON.stringify(element));
-			});
+			res.write(JSON.stringify(results));
 		});
 	}
 });
 
+app.post('/mybooks*', function (req,res){
+	console.log("POST");
+	MongoClient.connect(mongourl, function(err, client){
+		if(err){
+			console.log(err);
+		}
+		var db = client.db("cs290_lannonh");
+		var collection = db.collection("mybooks");
+		console.log("Valid collection");
+		console.log("object: ", req.body);
+		collection.insert(req.body,  function(err, results){
+			if(err){
+				console.log(err);
+			}
+			console.log("INSERT RESULTS", results);
+
+		});
+	});
+});
 app.get('/books.html*', function (req, res) {
 	var context = {};
-
 	MongoClient.connect(mongourl, function(err, client){
 		if(err){
 			console.log(err);
@@ -147,18 +162,25 @@ app.get('/books.html*', function (req, res) {
 		var db = client.db("cs290_lannonh");
 		var collection = db.collection("mybooks");
 		var allResults = [];
-		var context = {books: allResults, quote: "Books, they are on the shelves", person: "Confucious", pagename: "Bookshelf"};
 		if(collection){
+			console.log("Valid collection");
 			collection.find({}).toArray(function(err, results){
-					results.forEach(function (element){
-						allResults.push(element);
-					});
-					context.books = allResults;
+				results.forEach(function (element){
+					allResults.push(element);
+				});
+				var context = {books: allResults, quote: "Books, they are on the shelves", person: "Confucious", page_type: "bookshelf-page", pagename: "Bookshelf"};
+				hbsInstance.renderView(path.join(__dirname, "templates/", "books.handlebars"), context, function (err, html){
+					res.status(200).send(html);		
+				});
+				if(err){
+					console.log(err);
+				}
 			});		
+		}else{
+			hbsInstance.renderView(path.join(__dirname, "templates/", "books.handlebars"), context, function (err, html){
+				res.status(200).send(html);		
+			});
 		}
-		hbsInstance.renderView(path.join(__dirname, "templates/", "books.handlebars"), context, function (err, html){
-			res.status(200).send(html);		
-		});
 	});
 });
 app.delete('/delete_book/:isbn', function (req, res, next){
@@ -225,6 +247,7 @@ app.post("/uploadPhoto", function (req, res, next) {
 /**************************************/
 
 app.get('/*.html*', (req, res) => res.sendFile(__dirname + "/html" + req.path));
+app.get('/*.hb*', (req, res) => res.sendFile(__dirname + "/compiled" + req.path));
 app.get('/*.css*', (req, res) => res.sendFile(__dirname + "/css" + req.path));
 app.get('/*.js*', (req, res) => res.sendFile(__dirname + "/scripts" + req.path));
 app.get('/*.jpg*', (req, res) => res.sendFile(__dirname + "/images" + req.path));
