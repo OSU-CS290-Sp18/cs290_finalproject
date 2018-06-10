@@ -132,6 +132,10 @@ navbar li:hover {
     display: none;
 }
 
+.hidden > *{
+    display: none;
+}
+
 .shelf {
     margin-top: 10px;
     z-index: 1;
@@ -173,6 +177,12 @@ navbar li:hover {
 	font-size: 17px;
 }
 
+ul.added-quotes{
+	padding-left: 40px;
+	left: 15%;
+	width: 70%;
+	list-style-type:none;
+}
 .book-quote {
 	margin: 0px;
 	padding: 0px;
@@ -185,6 +195,171 @@ navbar li:hover {
 .book-pic {
     width: 150px;
     height: 200px;
+}
+
+#add-book-modal {
+	position: fixed;
+	top: 10%;
+	left: 10%;
+	height: 80%;
+	width: 80%;
+	background-color: #ffffff;
+	border: 1px solid #333;
+	z-index: 2;
+}
+
+.modal-close-button{
+	position: absolute;
+	right: 0px;
+	top: 0px;
+	font-size: 50px;
+	background-color: inherit;
+	border: none;
+	float: right;
+}
+
+.modal-header h3 {
+	position: relative;
+	font-size: 30px;
+	right-margin: -50%;
+	left: 50%;
+}
+
+.add-book-button {
+	position: fixed;
+	bottom: 50px;
+	right: 50px;
+	width: 100px;
+	height: 100px;
+	font-size: 50px;
+	background-color: #6666ff;
+	border-radius: 50%;
+}
+
+#modal-backdrop {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  background-color: rgba(0, 0, 0, 0.85);
+}
+
+.modal-footer {
+  display: flex;
+  position: absolute;
+  bottom: 50px;
+  right: 50px;
+  justify-content: flex-end;
+  padding: 10px 10px 20px 10px;
+}
+
+.modal-footer button {
+  font-size: 20px;
+  background-color: #fff;
+  color: #333;
+  border: 1px solid #333;
+  border-radius: 5px;
+  padding: 10px;
+  margin-right: 20px;
+  cursor: pointer;
+}
+.search-text, .description-text{
+	margin-left: 5%;
+	font-size: 30px;
+}
+img.delete-button:hover{
+	cursor: pointer;
+}
+
+ul.results li img{
+	z-index: 1000;
+	position: relative;
+	height: 50px;
+	top: 4px;
+	left: 4px;
+}
+ul.results{
+	background-color: #eeeeee;
+	z-index: 1000;
+}
+ul.results li:hover{
+	background-color: #1122ee;
+}
+ul.results p{
+	position: relative;
+	bottom:10px;
+	left: 5px;
+}
+ul {padding-left: 0px; }
+
+ul.results li{
+	z-index: 1000;
+	border: 1px solid #333;
+}
+
+.modal-footer .modal-cancel-button:hover {
+  background-color: #eee;
+}
+
+
+
+.book-search {
+	position: absolute;
+	font-size: 30px;
+	left: 15%;
+	width: 70%;
+	height: 40px;
+}
+
+ul.results{
+	position: absolute;
+	left: 15%;
+	width: 70%;
+	list-style-type:none;
+}
+
+.modal-footer .modal-accept-button {
+  background-color: #319df6;
+  color: #fff;
+}
+
+.modal-footer .modal-accept-button:hover {
+  background-color: #087dde;
+}
+
+#quote-adder > *{
+	height:30px;
+	font-size:20px;
+	padding:5px;
+}
+
+.added-quotes > *{
+	height:30px;
+	font-size:15px;
+	padding:5px;
+}
+.added-quotes {
+	margin-left:12%;
+}
+#quote-adder{
+	margin-left:12%;
+}
+#quote-text{
+	width:50%;
+}
+#quote-by{
+	width:15%;
+}
+div.description{
+	display: flex;
+	padding-top: 10px;
+}
+#book-description{
+	position: absolute;
+	width: 70%;
+	left: 15%;
 }
 table {
     border-collapse: collapse;
@@ -209,7 +384,9 @@ th {
     padding-top: 20px;
     text-align: left;
 }
-
+article.book{
+    border: solid black 2px;
+}
 article div.book-text{
 	width:100%;
 }

@@ -117,8 +117,6 @@ app.get('/query', function (req, res) {
     }
 });
 
-/**************************************/
-
 app.get("/photos.html", function (req, res, next) {
     MongoClient.connect(mongourl, {
         useNewUrlParser: true
@@ -129,7 +127,6 @@ app.get("/photos.html", function (req, res, next) {
             console.log("Photos page connection to DB (" + mongourl + ") established.")
             var db = client.db(dbname);
             var photoCollection = db.collection("userPhotos");
-
             photoCollection.find().toArray(function (err, photos) {
                 if (err) {
                     res.status(500).send("Error fetching photos from DB.");
@@ -149,6 +146,28 @@ app.get("/photos.html", function (req, res, next) {
         }
     });
 });
+
+app.get('/books.html*', function (req, res) {
+	MongoClient.connect(mongourl, function(err, client){
+		var db = client.db("bookshelf");
+		var collection = db.collection("mybooks");
+		var allResults = [];
+		//if collection exists
+		if(collection){
+			collection.find({}).toArray(function(err, results){
+					results.forEach(function (element){
+						allResults.push(element);
+					});
+					context.books = allResults;
+			});		
+		}
+		var context = {books: allResults, quote: "Books, they are on the shelves", person: "Confucious", page_type: "bookshelf-page", pagename: "Bookshelf"};
+		hbsInstance.renderView(path.join(__dirname, "templates/", "books.handlebars"), context, function (err, html){
+			res.status(200).send(html);		
+		});
+	});
+});
+
 
 app.post("/uploadPhoto", function (req, res, next) {
     MongoClient.connect(mongourl, {
@@ -172,7 +191,6 @@ app.post("/uploadPhoto", function (req, res, next) {
     console.log(req.body.photo);
     //console.log(body.photo)
 });
-/**************************************/
 
 app.get('/books.html*', function (req, res) {
     MongoClient.connect(mongourl, function (err, client) {

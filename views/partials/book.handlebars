@@ -6,7 +6,7 @@
 		<span>
 			<p class="book-title">{{title}}</p>
 			<p class="book-author"> // {{authors}}</p>
-			<img src="pencil.png" class="edit-button"/>
+			<img src="delete.jpg" class="delete-button"/>
 		</span>
 		{{#if rating}}
 			<img class="rating" src="rating_{{rating}}.jpg"/>
@@ -18,7 +18,7 @@
 			<h3 class="book-quote quote-heading">Quotes:</h3>
 		{{/if}}
 		{{#each quotes}}
-			<p class="book-quote">{{person}} ~ "{{quote}}"</p>	
+			<p class="book-quote">"{{quote}} ~ {{person}} "</p>	
 		{{/each}}
 	</div>
 </article>
