@@ -10,6 +10,7 @@
     <script src="script.js" charset="utf-8" defer></script>
     <script src="https://use.fontawesome.com/releases/v5.0.9/js/all.js" defer></script>
 	<link href="https://fonts.googleapis.com/css?family=Comfortaa|Dancing+Script:700|EB+Garamond" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Dancing+Script" rel="stylesheet">
 </head>
 
 <body class="book-page">
@@ -39,32 +40,38 @@
       <div class="modal-dialog">
 
         <div class="modal-header">
-          <h3>Add a Book</h3>
-          <button type="button" class="modal-close-button">&times;</button>
+          <h3 class="title">Add a Book</h3>
         </div>
 		<div class="modal-body">
-			<span class="search-text">Search:  <input type="text" class="book-search" ></input> </span>
-			<div class="search-results">
-				<ul class="results">
-			
-				</ul>
+			<div class="left-page">
+				<input type="text" class="book-search" placeholder="Search...">
+				<div class="search-results">
+					<ul id="hubbabaloo" class="results">
+					</ul>
+				</div>
+				<div class="description">
+					<h3 class="label">Description</h3>
+					<textarea id="book-description" rows="20" cols="40"> </textarea>
+				</div>
 			</div>
-			<div class="description">
-				<p class="description-text">Description: </p>
-				<textarea id="book-description" rows="5" cols="40"> </textarea>
-			</div>
-			<div class="quotes"> 
+			<div class="right-page">
+					<h3 class="label">Quotes</h3>
+				<div class="quotes"> 
+					<input id="quote-text" placeholder="Quote..."></input>
+					<input id="quote-by" placeholder="Quotee..."></input>
+					<button id="quote-add-button" type="button">+</button>
+				</div>
 				<ul class="added-quotes">
 				</ul>
-					<span id="quote-adder">Quote: <input id="quote-text"></input>By: <input id="quote-by"></input><button id="quote-add-button" type="button">+</button></span>
 			</div>
-			<div class="rating-slider">
-				<p class="rating-heading">Rating (1-5)</p>
-				<span><button type="button" id="minus-button">-</button><button type="button" id="plus-button">+</button><img id="modal-rating" src="rating_1.jpg"></span>
-			</div>
-
 		</div>
         <div class="modal-footer">
+		  <div class="rating-slider">
+				<h3 class="rating-heading label">Rating (1-5)</h3>
+				<button type="button" id="minus-button">-</button>
+				<button type="button" id="plus-button">+</button>
+				<img id="modal-rating" src="rating_1.png"></span>
+			</div>
           <button type="button" class="modal-cancel-button">Cancel</button>
           <button type="button" class="modal-accept-button">Add Book</button>
         </div>
