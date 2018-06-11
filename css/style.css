@@ -160,11 +160,7 @@ navbar li:hover {
 
 .book-title, .book-author {
 	width: 100%;
-	font-size: 20px;
-}
-.book-description {
-	width: 100%;
-	line-height: 20px;
+	font-size: 40px;
 }
 .book-author {
 	color: #999999;
@@ -178,7 +174,7 @@ navbar li:hover {
 }
 
 ul.added-quotes{
-	padding-left: 40px;
+	padding-left: 0px;
 	left: 15%;
 	width: 70%;
 	list-style-type:none;
@@ -204,25 +200,120 @@ ul.added-quotes{
 	height: 80%;
 	width: 80%;
 	background-color: #ffffff;
+	background-image: url("add_background.jpg");
+	background-repeat: no-repeat;
+	background-size: cover;
 	border: 1px solid #333;
 	z-index: 2;
 }
 
+#add-book-modal *{
+	font-family: 'Dancing Script', cursive;
+	background-color: transparent;
+}
+
+div h3.title {
+	position: relative;
+	left-margin: -50%;
+	left: 17%;
+	font-size: 55px;
+	font-family: 'Dancing Script', cursive;
+}
+h3.label {
+	position: absolute;
+	width: 100%;
+	left-margin: -40%;
+	left: 35%;
+	font-size: 35px;
+	font-family: 'Dancing Script', cursive;
+}
+
+
+.left-page {
+	position: absolute;
+	left: 7%;
+	right: 57%;
+}
+.left-page .book-search{
+	position: relative;
+	width: 100%;
+	height: 30px;
+	font-size: 25px;
+	font-family: 'Dancing Script', cursive;
+	top: -20px;
+	outline: none;	
+	border-color: black;
+}
+.right-page {
+	position: fixed;
+	left: 58%;
+	top: 80px;;
+}
+::placeholder {
+	color: black;
+}
+div.description *{
+	position: relative;
+	top: -30px;
+	width: 100%;
+}
+#book-description {
+	border: 3px, solid, #000000;	
+	font-size: 18px;
+	border-color: black;
+	outline: none;
+}
+
+.quotes{
+	height: 30px;
+	font-size: 25px;
+	font-family: 'Dancing Script', cursive;
+	position: relative;
+	display: flex;
+	top: 100px;
+}
+#quote-text{
+	height: 30px;
+	font-size: 25px;
+	font-family: 'Dancing Script', cursive;
+	border-color: black;
+	position: relative;
+	width: 350px;
+	left: -65px;
+}
+#quote-by{
+	height: 30px;
+	font-size: 25px;
+	font-family: 'Dancing Script', cursive;
+	border-color: black;
+	position: relative;
+	width:23%;
+	margin-right:20px;
+	margin-left: -40px;
+}
+#quote-add-button{
+	border: none;
+	outline: none;
+	font-size: 30px;
+	font-family: 'Dancing Script', cursive;
+}
+
+.right-page h3.label{
+	position: absolute;
+	left: 30%;
+}
+ul.added-quotes{
+	position: relative;
+	top: 100px;
+	left: -45px;
+}
 .modal-close-button{
 	position: absolute;
 	right: 0px;
 	top: 0px;
 	font-size: 50px;
 	background-color: inherit;
-	border: none;
 	float: right;
-}
-
-.modal-header h3 {
-	position: relative;
-	font-size: 30px;
-	right-margin: -50%;
-	left: 50%;
 }
 
 .add-book-button {
@@ -254,74 +345,63 @@ ul.added-quotes{
   justify-content: flex-end;
   padding: 10px 10px 20px 10px;
 }
-
-.modal-footer button {
-  font-size: 20px;
-  background-color: #fff;
-  color: #333;
-  border: 1px solid #333;
-  border-radius: 5px;
-  padding: 10px;
-  margin-right: 20px;
-  cursor: pointer;
+.rating-slider{
+	display: flex;
+	position: absolute;
+	left: -300%;
 }
-.search-text, .description-text{
-	margin-left: 5%;
-	font-size: 30px;
+.rating-heading.label{
+	position: relative;
+	left: -20px;
+	top: -60px
+}
+.rating-slider button, .rating-slider img{
+	position: relative;
+	top: -10px;
+	height: 20px;
+}
+#modal-rating{
+	background-color: (0,0,0,0);
+	top: -8px;
+}
+.rating-slider button{
+	border-radius:100%;	
+	height: 25px;
+	width: 30px;
+	border: 2px solid black;
 }
 img.delete-button:hover{
 	cursor: pointer;
 }
-
-ul.results li img{
-	z-index: 1000;
-	position: relative;
-	height: 50px;
-	top: 4px;
-	left: 4px;
+div.modal-body div.left-page div.search-results ul.results {
+	position: absolute;
+	z-index: 2000;
+	left: -39px;
+	top: -1px;
+	width: 100%;
 }
-ul.results{
-	background-color: #eeeeee;
-	z-index: 1000;
-}
-ul.results li:hover{
-	background-color: #1122ee;
-}
-ul.results p{
-	position: relative;
-	bottom:10px;
-	left: 5px;
-}
-ul {padding-left: 0px; }
-
 ul.results li{
+	background-color: #c39258 !important;
 	z-index: 1000;
 	border: 1px solid #333;
+	position: relative;
+	padding: none;
+	margin: none;
+	width: 100%;
+	list-style-type: none;
+}
+ul.results li p {
+	font-size: 20px;
+}
+ul.results li img{
+	height: 40px;	
 }
 
-.modal-footer .modal-cancel-button:hover {
-  background-color: #eee;
-}
-
-
-
-.book-search {
-	position: absolute;
-	font-size: 30px;
-	left: 15%;
-	width: 70%;
-	height: 40px;
-}
-
-ul.results{
-	position: absolute;
-	left: 15%;
-	width: 70%;
-	list-style-type:none;
-}
-
-.modal-footer .modal-accept-button {
-  background-color: #319df6;
+.modal-footer .modal-accept-button .modal-cancel-button{
+  background-color: black;
+  height: 70px;
+  position: relative;
+  top: -30px;
   color: #fff;
 }
 
@@ -329,38 +409,6 @@ ul.results{
   background-color: #087dde;
 }
 
-#quote-adder > *{
-	height:30px;
-	font-size:20px;
-	padding:5px;
-}
-
-.added-quotes > *{
-	height:30px;
-	font-size:15px;
-	padding:5px;
-}
-.added-quotes {
-	margin-left:12%;
-}
-#quote-adder{
-	margin-left:12%;
-}
-#quote-text{
-	width:50%;
-}
-#quote-by{
-	width:15%;
-}
-div.description{
-	display: flex;
-	padding-top: 10px;
-}
-#book-description{
-	position: absolute;
-	width: 70%;
-	left: 15%;
-}
 table {
     border-collapse: collapse;
     max-width: 70%;
