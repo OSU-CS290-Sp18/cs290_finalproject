@@ -150,7 +150,9 @@ app.post('/mybooks*', function (req,res){
 			}
 			console.log("INSERT RESULTS", results);
 
+			res.status(200).send("Document inserted!");
 		});
+		
 	});
 });
 app.get('/books.html*', function (req, res) {
