@@ -246,6 +246,15 @@ app.post("/uploadPhoto", function (req, res, next) {
 
 /**************************************/
 
+var resumeData = require('./resume_data.json');
+console.log(resumeData);
+
+app.get('/resume.html', function (req, res, next) {
+    res.status(200).render('resumePage', {
+        resume: resumeData
+    });
+});
+
 app.get('/*.html*', (req, res) => res.sendFile(__dirname + "/html" + req.path));
 app.get('/*.hb*', (req, res) => res.sendFile(__dirname + "/compiled" + req.path));
 app.get('/*.css*', (req, res) => res.sendFile(__dirname + "/css" + req.path));
