@@ -249,11 +249,27 @@ app.post("/uploadPhoto", function (req, res, next) {
 /**************************************/
 
 var resumeData = require('./resume_data.json');
-console.log(resumeData);
 
 app.get('/resume.html', function (req, res, next) {
+	var experience = resumeData.experience;
+	var education = resumeData.education;
+	var skills = resumeData.skills;
     res.status(200).render('resumePage', {
-        resume: resumeData
+		layout: 'resume_main',
+
+		yearBegin: experience.yearBegin,
+		yearEnd: experience.yearEnd,
+		job: experience.job,
+		jobDuties: experience.jobDuties,
+
+		yearGraduated: education.yearGraduated,
+		degree: education.degree,
+		major: education.major,
+		school: education.school,
+		schoolCity: education.school,
+		schoolState: education.schoolState,
+
+		skills: skills
     });
 });
 

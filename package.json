@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "handlebars views/partials/pictureFrame.handlebars -f scripts/pictureFrame.js && handlebars templates/books.handlebars -f compiled/books.js && handlebars views/resumePage.handlebars -f compiled/resumeTemplate.js",
     "prestart": "npm run build",
-    "start": "handlebars views/partials/pictureFrame.handlebars -f scripts/pictureFrame.js && handlebars templates/* -f compiled/books.js && node osu_network_server.js"
+    "start": "handlebars views/partials/pictureFrame.handlebars -f scripts/pictureFrame.js && handlebars templates/* -f compiled/books.js && handlebars views/resumePage.handlebars -f compiled/resumeTemplate.js && node osu_network_server.js"
   },
   "repository": {
     "type": "git",

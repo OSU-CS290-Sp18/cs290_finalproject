@@ -1,0 +1,32 @@
+{
+    "id": "john",
+    "name": "John Smith",
+	"experience":
+        {
+            "yearBegin": 2015,
+            "yearEnd": "current",
+            "job": "Chief Executive at Tootle, Inc.",
+            "jobDuties": [
+                "Ruled with iron fist.",
+                "Led initiatives to \"organize the world's turtles\".",
+                "Grew revenues by 29% in FY 2017."
+            ]
+        
+        },
+    "education":
+        {
+            "yearGraduated": 2012,
+            "degree": "Doctor of Philosophy",
+            "major": "Turtology",
+            "school": "Turtle State University",
+            "schoolCity": "Turtleview",
+            "schoolState": "Massamissischusett"
+        },
+	"skills": [
+        "Nunchuck skills",
+        "Hunting wolverines",
+        "Turtle care",
+        "Employee retention",
+		"Interturtle communication"
+	]
+}

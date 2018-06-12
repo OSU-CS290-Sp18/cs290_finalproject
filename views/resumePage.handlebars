@@ -1,0 +1,97 @@
+<main id="resume">
+    <table>
+        <tr class="resume-category">
+    <th colspan="2">Experience</th>
+</tr>
+<tr>
+    <td>{{yearBegin}} - {{yearEnd}}</td>
+    <td>
+        {{job}}
+        <ul>
+            {{#each jobDuties}}
+            <li>{{this}}</li>
+            {{/each}}
+        </ul>
+    </td>
+</tr>
+
+<tr class="resume-category">
+    <th colspan="2">Education</th>
+</tr>
+<tr>
+    <td>{{yearGraduated}}</td>
+    <td>
+        <dl>
+            <dt>{{degree}}, {{major}}</dt>
+            <dd>{{school}}, {{schoolCity}}, {{schoolState}}</dd>
+        </dl>
+    </td>
+</tr>
+
+<tr class="resume-category">
+    <th>Skills</th>
+    <td>
+        <ul>
+            {{#each skills}}
+            <li>{{this}}</li>
+            {{/each}}
+        </ul>
+    </td>
+</tr>
+    </table>
+</main>
+
+<button type="button" id="edit-resume-button"><i class="far fa-image"></i></button>
+
+    <div id="modal-backdrop" class="hidden"></div>
+    <div id="edit-resume-modal" class="hidden">
+
+        <div class="modal-dialog">
+
+            <div class="modal-header">
+                <h3>Add a Picture</h3>
+                <button type="button" id="modal-close-button">&times;</button>
+            </div>
+
+            <div class="modal-body">
+                <h2>Experience: </h2>
+                <label for="year-begin">From</label>
+                <input type="text" id="year-begin">
+                <label for="year-end">To</label>
+                <input type="text" id="year-end">
+                <label for="job">Job title</label>
+                <input type="text" id="job">
+                <h3>Job duties</h3>
+                <input type="text" class="duty">
+                <input type="text" class="duty">
+                <input type="text" class="duty">
+
+                <h2>Education</h2>
+                <label for="year-graduated">Year obtained degree</label>
+                <input type="text" id="year-graduated">
+                <label for="degree">Degree</label>
+                <input type="text" id="degree">
+                <label for="major">Major</label>
+                <input type="text" id="major">
+                <label for="school">School</label>
+                <input type="text" id="school">
+                <label for="school-city">City</label>
+                <input type="text" id="school-city">
+                <label for="school-state">State</label>
+                <input type="text" id="school-state">
+
+                <h2>Skills</h2>
+                <input type="text" class="skills">
+                <input type="text" class="skills">
+                <input type="text" class="skills">
+                <input type="text" class="skills">
+                <input type="text" class="skills">
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" id="modal-accept-button">Add Picture</button>
+            </div>
+
+        </div>
+
+    </div>
