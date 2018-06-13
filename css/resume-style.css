@@ -1,5 +1,50 @@
+.jobTitle, .degreeTitle {
+    font-weight: bold;
+}
+
+.jobTitle ul {
+    font-weight: normal;
+}
+
+#edit-resume-button {
+    position: fixed;
+    bottom: 50px;
+    right: 50px;
+    background-color: orange;
+    border: 1px solid black;
+    color: white;
+    padding: 5px 10px;
+}
+
 #edit-resume-modal {
-    display: block;
-    width: 80%;
-    margin: 50px auto;
+    position: fixed;
+    top: 15%;
+    left: 50%;
+    width: 50%;
+    max-height: 60%;
+    margin-left: -25%;
+    z-index: 99;
+    background-color: white;
+    border: 1px solid gray;
+    padding: 50px;
+    overflow: auto;
+}
+
+#edit-resume-modal input {
+    width: 100%;
+    margin-top: 5px;
+}
+
+.modal-footer {
+    position: static;
+}
+
+#modal-close-button {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+}
+
+#modal-accept-button {
+
 }

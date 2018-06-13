@@ -1,7 +1,6 @@
 {
-    "id": "john",
     "name": "John Smith",
-	"experience":
+	"experience": [
         {
             "yearBegin": 2015,
             "yearEnd": "current",
@@ -13,7 +12,18 @@
             ]
         
         },
-    "education":
+        {
+            "yearBegin": 2012,
+            "yearEnd": 2015,
+            "job": "General Manager at TurtleLand, Co.",
+            "jobDuties": [
+                "Oversaw turtle care staff.",
+                "Hired new staff.",
+                "Participated in company-wide monthly turtle counting contests."
+            ]
+        }
+    ],
+    "education": [
         {
             "yearGraduated": 2012,
             "degree": "Doctor of Philosophy",
@@ -22,6 +32,15 @@
             "schoolCity": "Turtleview",
             "schoolState": "Massamissischusett"
         },
+        {
+            "yearGraduated": 2007,
+            "degree": "Bachelor of Science",
+            "major": "Marine Biology",
+            "school": "Turtle State University",
+            "schoolCity": "Turtleview",
+            "schoolState": "Massamissischusett"
+        }
+    ],
 	"skills": [
         "Nunchuck skills",
         "Hunting wolverines",
