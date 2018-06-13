@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Personal Webpage</title>
+
+    <link rel="stylesheet" href="style.css" media="screen">
+
+    <link rel="stylesheet" href="resume-style.css" media="screen" type="text/css" >
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.runtime.js"></script>
+
+    <!--<script src="script.js" charset="utf-8" defer></script>-->
+
+    <script src="compiled/resumeTemplate.js" charset="utf-8" defer></script>
+    
+    <script src="scripts/resume.js" charset="utf-8" defer></script>
+
+    <script src="https://use.fontawesome.com/releases/v5.0.9/js/all.js" defer></script>
+
+    <link href="https://fonts.googleapis.com/css?family=Comfortaa|Dancing+Script:700|EB+Garamond" rel="stylesheet">
+</head>
+
+<body class="resume-page">
+    <header class="resume">
+        <div class="header-content">
+            <img src="ResumeIcon.png" class="resume page-image" />
+            <h1>Resume</h1>
+            <p class="header-quote">“The challenge of life, I have found, is to build a resume that doesn’t simply tell a story about what you <em>want</em> to be, but a story about <em>who</em> you want to be.”<br><br>Oprah Winfrey
+            </p>
+        </div>
+
+        <navbar>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="books.html">Bookshelf</a></li>
+                <li><a href="photos.html">Photos</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li class="active"><a href="resume.html">Resume</a></li>
+            </ul>
+        </navbar>
+    </header>
+
+    {{{body}}}
+
+    </body>
+
+</html>

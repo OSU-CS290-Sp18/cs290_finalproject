@@ -1,0 +1,38 @@
+<tr class="resume-category">
+    <th colspan="2">Experience</th>
+</tr>
+<tr>
+    <td>{{experience.yearBegin}} - {{experience.yearEnd}}</td>
+    <td>
+        {{experience.job}}
+        <ul>
+            {{#each experience.jobDuties}}
+            <li>{{this}}</li>
+            {{/each}}
+        </ul>
+    </td>
+</tr>
+
+<tr class="resume-category">
+    <th colspan="2">Education</th>
+</tr>
+<tr>
+    <td>{{yearGraduated}}</td>
+    <td>
+        <dl>
+            <dt>{{degree}}, {{major}}</dt>
+            <dd>{{school}}, {{schoolCity}}, {{schoolState}}</dd>
+        </dl>
+    </td>
+</tr>
+
+<tr class="resume-category">
+    <th>Skills</th>
+    <td>
+        <ul>
+            {{#each skills}}
+            <li>{{this}}</li>
+            {{/each}}
+        </ul>
+    </td>
+</tr>

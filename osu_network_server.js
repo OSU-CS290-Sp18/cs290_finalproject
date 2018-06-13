@@ -248,6 +248,51 @@ app.post("/uploadPhoto", function (req, res, next) {
 
 /**************************************/
 
+app.get('/resume.html', function (req, res, next) {
+	MongoClient.connect(mongourl, {
+        useNewUrlParser: true
+    }, function (err, client) {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log("Resume page connection to DB (" + mongourl + ") established.");
+            var db = client.db(dbname);
+			var resumeCollection = db.collection("resume");
+
+            resumeCollection.find().toArray(function (err, resumeData) {
+                if (err) {
+                    res.status(500).send("Error fetching resume from DB.");
+                    console.log(err);
+                } else {
+					var resume = resumeData[0];
+                    var experience = resume.experience;
+					var education = resume.education;
+					var skills = resume.skills;
+					res.status(200).render('resumePage', {
+						layout: 'resume_main',
+
+						experience: experience,
+						yearBegin: experience.yearBegin,
+						yearEnd: experience.yearEnd,
+						job: experience.job,
+						jobDuties: experience.jobDuties,
+
+						education: education,
+						yearGraduated: education.yearGraduated,
+						degree: education.degree,
+						major: education.major,
+						school: education.school,
+						schoolCity: education.school,
+						schoolState: education.schoolState,
+
+						skills: skills 
+                    });
+                }
+            });
+        }
+    });	
+});
+
 app.get('/*.html*', (req, res) => res.sendFile(__dirname + "/html" + req.path));
 app.get('/*.hb*', (req, res) => res.sendFile(__dirname + "/compiled" + req.path));
 app.get('/*.css*', (req, res) => res.sendFile(__dirname + "/css" + req.path));
